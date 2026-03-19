@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智慧膽管守護者</title>
+  <style>
+    :root {
+      --bg: #f5f3ee;
+      --text: #282126;
+      --green-dark: #a8b087;
+      --green-light: #d7de9b;
+      --blue-box: #a9c6d4;
+      --yellow: #efd37a;
+      --orange: #ef6b3d;
+      --mint: #b9d4c0;
+      --purple: #b59ad9;
+      --border: #2c252a;
+      --white: #ffffff;
+      --shadow: 0 10px 24px rgba(40, 33, 38, 0.08);
+      --radius-xl: 36px;
+      --radius-lg: 28px;
+      --radius-md: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .display {
+      font-family: "DFKai-SB", "BiauKai", "Microsoft JhengHei", cursive;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin: 0 auto;
+    }
+
+    .blob, .triangle, .loop {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.92;
+    }
+
+    .blob {
+      width: 92px;
+      height: 92px;
+      background: var(--yellow);
+      border-radius: 48% 52% 40% 60% / 61% 42% 58% 39%;
+    }
+
+    .blob.orange {
+      background: var(--orange);
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+    }
+
+    .triangle {
+      width: 0;
+      height: 0;
+      border-left: 22px solid transparent;
+      border-right: 22px solid transparent;
+      border-bottom: 40px solid #99a763;
+      transform: rotate(100deg);
+    }
+
+    .loop {
+      width: 72px;
+      height: 72px;
+      border: 8px solid transparent;
+      border-top-color: #8fc0d5;
+      border-right-color: #8fc0d5;
+      border-radius: 50%;
+      transform: rotate(24deg);
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(245, 243, 238, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(44, 37, 42, 0.08);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      border: 2px solid rgba(44, 37, 42, 0.08);
+      background: rgba(255,255,255,0.7);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      transform: translateY(-1px);
+      background: #fffbe9;
+    }
+
+    header.hero {
+      position: relative;
+      padding: 42px 0 28px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-card {
+      background: var(--green-dark);
+      border-radius: var(--radius-xl);
+      padding: 34px;
+      min-height: 270px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .hero-card h1 {
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    .hero-card p {
+      font-size: 1.06rem;
+      max-width: 660px;
+      font-weight: 600;
+    }
+
+    .hero-side {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      border: 2px dashed rgba(44,37,42,0.15);
+    }
+
+    .hero-side h2 {
+      font-size: 1.8rem;
+    }
+
+    .hero-side ul {
+      padding-left: 18px;
+      font-weight: 700;
+    }
+
+    main {
+      padding-bottom: 52px;
+    }
+
+    section {
+      position: relative;
+      margin: 28px 0;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      margin-bottom: 14px;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .grid-2.reverse {
+      grid-template-columns: 0.95fr 1.05fr;
+    }
+
+    .big-panel {
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      min-height: 520px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .panel-green { background: var(--green-light); }
+    .panel-blue { background: var(--blue-box); }
+    .panel-white { background: var(--white); }
+
+    .phone-frame {
+      background: linear-gradient(180deg, #cde6f5 0%, #d7edf9 52%, #dceca9 52%, #93af00 100%);
+      border: 4px solid var(--border);
+      border-radius: 32px;
+      min-height: 480px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .cloud {
+      position: absolute;
+      top: 72px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 52px;
+      background: #fff;
+      border-radius: 50px;
+    }
+
+    .cloud::before,
+    .cloud::after {
+      content: "";
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    .cloud::before {
+      width: 56px;
+      height: 56px;
+      left: 14px;
+      top: -24px;
+    }
+
+    .cloud::after {
+      width: 64px;
+      height: 64px;
+      right: 10px;
+      top: -30px;
+    }
+
+    .hill1, .hill2, .hill3 {
+      position: absolute;
+      bottom: 0;
+      width: 130%;
+      border-radius: 50%;
+    }
+
+    .hill1 {
+      height: 120px;
+      background: #c3db79;
+      left: -10%;
+      bottom: 92px;
+    }
+
+    .hill2 {
+      height: 110px;
+      background: #b3ce61;
+      left: 10%;
+      bottom: 70px;
+    }
+
+    .hill3 {
+      height: 130px;
+      background: #86a300;
+      left: -15%;
+      bottom: -10px;
+    }
+
+    .panel-content p,
+    .panel-content li,
+    .panel-content label,
+    .panel-content span,
+    .panel-content input,
+    .panel-content textarea,
+    .panel-content button {
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    }
+
+    .chat-note, .card, .question-card, .reminder-card {
+      background: rgba(255,255,255,0.7);
+      border: 2px solid rgba(44, 37, 42, 0.08);
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .chat-box {
+      background: rgba(255,255,255,0.55);
+      border-radius: 20px;
+      border: 2px solid rgba(44, 37, 42, 0.08);
+      min-height: 260px;
+      max-height: 360px;
+      overflow-y: auto;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .message {
+      padding: 12px 14px;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      white-space: pre-wrap;
+      max-width: 90%;
+    }
+
+    .message.user {
+      background: #fef8d8;
+      margin-left: auto;
+    }
+
+    .message.bot {
+      background: #eff5d0;
+    }
+
+    label {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .field { margin-bottom: 14px; }
+
+    input, textarea, select {
+      width: 100%;
+      border: 2px solid rgba(44, 37, 42, 0.12);
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.88);
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    button {
+      border: none;
+      border-radius: 16px;
+      padding: 11px 18px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 0.98rem;
+      transition: 0.2s ease;
+    }
+
+    .btn-dark {
+      background: var(--text);
+      color: var(--white);
+    }
+
+    .btn-soft {
+      background: #f5eeb8;
+      color: var(--text);
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .mini-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.78);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .care-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .arrow-wrap {
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .arrow-icon {
+      position: absolute;
+      left: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 54px;
+      height: 54px;
+      background: rgba(153, 167, 99, 0.95);
+      clip-path: polygon(0 50%, 70% 0, 70% 28%, 100% 28%, 100% 72%, 70% 72%, 70% 100%);
+    }
+
+    .caption {
+      text-align: center;
+      font-size: 1.6rem;
+      margin-top: 18px;
+    }
+
+    .quiz-options {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .option-btn {
+      text-align: left;
+      background: rgba(255,255,255,0.86);
+      border: 2px solid rgba(44, 37, 42, 0.08);
+      color: var(--text);
+      width: 100%;
+    }
+
+    .option-btn.correct {
+      background: #daf1cf;
+      border-color: #98cb81;
+    }
+
+    .option-btn.wrong {
+      background: #fde1dd;
+      border-color: #e9a29b;
+    }
+
+    .score-board {
+      background: rgba(255,255,255,0.75);
+      border-radius: 20px;
+      padding: 16px;
+      border: 2px solid rgba(44,37,42,0.08);
+      margin-top: 16px;
+      font-weight: 700;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 22px 12px 34px;
+      color: rgba(40,33,38,0.75);
+      font-weight: 700;
+    }
+
+    @media (max-width: 940px) {
+      .hero-grid,
+      .grid-2,
+      .grid-2.reverse {
+        grid-template-columns: 1fr;
+      }
+
+
+      .care-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <div class="brand display">智慧膽管守護者</div>
+      <div class="nav-links">
+        <a href="#ai">AI諮詢小幫手</a>
+        <a href="#care">日常照護</a>
+        <a href="#quiz">趣味問答</a>
+        <a href="#record">紀錄表及衛教單張下載</a>
+        <a href="#colorcard">引流液色卡</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="blob" style="left:-18px; top:150px;"></div>
+    <div class="triangle" style="left:18px; bottom:8px;"></div>
+    <div class="container hero-grid">
+      <div class="hero-card">
+        <h1>智慧膽管守護者</h1>
+        <p>結合 AI 諮詢、膽道疾病衛教、遊戲測驗、紀錄表下載及引流液色卡，協助病人與家屬更安心地進行日常照護與自我管理。</p>
+      </div>
+      <div class="hero-side">
+        <h2>網站功能</h2>
+        <ul>
+          <li>AI諮詢功能：提供即時建議</li>
+          <li>介紹及衛教專區</li>
+          <li>遊戲測驗環節</li>
+          <li>紀錄表及衛教單張下載</li>
+          <li>引流液色卡</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="ai">
+      <div class="blob" style="left:-40px; top:180px;"></div>
+      <div class="loop" style="right:24px; bottom:36px;"></div>
+      <div class="grid-2">
+        <div class="big-panel panel-green panel-content">
+          <div class="mini-tag">AI諮詢小幫手</div>
+          <h2 class="section-title">AI諮詢小幫手</h2>
+          <p class="section-desc">可輸入 PTGBD、膽汁引流管、傷口觀察或換藥相關問題，系統會先提供即時衛教建議。</p>
+
+          <div class="chat-note">
+            <strong>使用提醒：</strong>
+            <p>本功能僅供衛教輔助，若出現發燒、膽汁顏色明顯改變、傷口紅腫熱痛、引流量異常減少或突然脫落，仍需立即聯絡醫護人員。</p>
+          </div>
+
+          <div class="chat-box" id="chatBox">
+            <div class="message bot">您好，我是智慧膽管守護者 AI 小幫手。
+您可以詢問：
+1. 膽汁引流管照護方式
+2. 發燒、感染怎麼辦
+3. PTGBD 照護注意事項
+4. 什麼情況需要回診或就醫</div>
+          </div>
+
+          <div class="field">
+            <label for="userQuestion">諮詢欄</label>
+            <textarea id="userQuestion" placeholder="例如：引流袋裡的膽汁變少了，需要注意什麼？"></textarea>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-dark" onclick="sendMessage()">送出問題</button>
+            <button class="btn-soft" onclick="clearChat()">清除對話</button>
+          </div>
+        </div>
+
+        <div class="big-panel panel-white panel-content">
+          <div class="card">
+            <h3>常見可提問主題</h3>
+            <ul style="padding-left: 20px; margin-top: 10px; font-weight: 700;">
+              <li>引流管固定與避免拉扯的方法</li>
+              <li>膽汁顏色、量與性質怎麼觀察</li>
+              <li>何時需要換藥或回醫院處理</li>
+              <li>PTGBD 照護與活動建議</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="care">
+      <div class="blob orange" style="left:12px; top:8px;"></div>
+      <div class="triangle" style="right:42%; top:52%;"></div>
+      <div class="grid-2 reverse">
+        <div class="big-panel panel-blue panel-content">
+          <h2 class="section-title">日常照護</h2>
+          <p class="section-desc">依照你提供的衛教圖片內容，整理為三個重點區塊：基本介紹、換藥步驟與照護注意事項。</p>
+
+          <div class="care-grid">
+            <div class="card">
+              <h3>1. 何謂 PTGBD 引流管？</h3>
+              <p>PTGBD 引流管為經皮經肝膽囊引流管，是經由皮膚穿刺將導管放入膽囊內，將膽汁引流至體外，主要用於急性膽囊炎、膽道阻塞或暫時無法手術之病人，以減少膽囊壓力、控制感染並緩解不適。</p>
+            </div>
+            <div class="card">
+              <h3>2. 傷口護理與換藥</h3>
+              <p>觀察傷口外觀是否乾淨，依醫囑進行換藥；若紗布潮濕、髒污、異味、滲液增加或皮膚發紅，應提早更換並通知醫護人員。</p>
+            </div>
+            <div class="card">
+              <h3>3. 引流管照護重點</h3>
+              <p>避免牽扯與扭折，固定於同側腰際衣物上，並保持引流袋低於傷口位置；引流袋約八分滿時應排空，且排出口不可碰觸容器。</p>
+            </div>
+            <div class="card">
+              <h3>4. 何時需要就醫</h3>
+              <p>若出現引流量突然變少、顏色明顯改變、大量鮮血、傷口紅腫熱痛、滲液增加、發燒持續或引流管滑脫，應儘速就醫。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-wrap">
+          <div class="arrow-icon"></div>
+          <div style="width:100%; display:grid; gap:14px;">
+            <div class="card">
+              <img src="images/1.png" alt="PTGBD 基本介紹" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+              <div style="display:none; padding:12px; font-weight:700;">請將 <code>1.png</code> 放在與 <code>index.html</code> 相同的資料夾中。</div>
+            </div>
+            <div class="card">
+              <img src="images/2.png" alt="PTGBD 換藥步驟" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+              <div style="display:none; padding:12px; font-weight:700;">請將 <code>2.png</code> 放在與 <code>index.html</code> 相同的資料夾中。</div>
+            </div>
+            <div class="card">
+              <img src="images/3.png" alt="PTGBD 日常照護注意事項" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+              <div style="display:none; padding:12px; font-weight:700;">請將 <code>3.png</code> 放在與 <code>index.html</code> 相同的資料夾中。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz">
+      <div class="blob" style="right:-24px; top:8px;"></div>
+      <div class="big-panel panel-green panel-content" style="min-height: 560px;">
+        <div class="mini-tag">趣味問答</div>
+        <h2 class="section-title">趣味問答</h2>
+        <p class="section-desc">題目依據 PTGBD 問卷內容設計，點選答案後會立即顯示是否正確。</p>
+        <div id="quizArea"></div>
+        <div class="score-board" id="quizSummary">尚未開始作答。</div>
+      </div>
+    </section>
+
+    <section id="record">
+       <div class="big-panel panel-blue panel-content">
+         <h2 class="section-title">紀錄表及衛教單張下載</h2>
+         <p class="section-desc">可下載引流液紀錄表與衛教單張，方便列印與居家照護參考。</p>
+       <div class="btn-row">
+         <button class="btn-dark" type="button" onclick="downloadForm()">下載紀錄表</button>
+         <button class="btn-soft" type="button" onclick="downloadGuide()">下載衛教單張</button>
+       </div>
+     </div>
+    </section>
+
+
+    <section id="colorcard">
+      <div class="triangle" style="right:16px; top:12px;"></div>
+      <div class="big-panel panel-green panel-content" style="min-height: 520px;">
+        <div class="mini-tag">引流液色卡</div>
+        <h2 class="section-title">引流液色卡</h2>
+        <p class="section-desc">可對照引流液顏色進行觀察與記錄。一般顏色多為黃褐色、金黃色或黃綠色；放置後三日內若引流液呈現紅色，可能屬常見情形，仍應持續觀察。</p>
+
+        <div class="card" style="margin-bottom:18px;">
+          <img src="images/colorcard.png" alt="引流液色卡" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <div style="display:none; padding:18px; font-weight:700;">請將使用者提供的色卡圖片檔 <code>引流液色卡.png</code> 放在與 <code>index.html</code> 相同的資料夾中，即可顯示色卡圖片。</div>
+        </div>
+
+        <div class="care-grid">
+          <div class="card"><strong>暗紅色／鮮紅色／淡紅色</strong><br>若為放置初期三日內，可持續觀察；若大量鮮紅色或持續出血，應立即就醫。</div>
+          <div class="card"><strong>金黃色／黃色／淡黃色</strong><br>多為較常見之膽汁顏色，仍需搭配引流量與病人症狀一起觀察。</div>
+          <div class="card"><strong>黃褐色／褐色</strong><br>常見於膽汁引流，可持續記錄顏色與量的變化。</div>
+          <div class="card"><strong>黃綠色／墨綠色</strong><br>若與平常差異不大可持續觀察；若顏色突然改變並合併疼痛、發燒或異味，應就醫。</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">© 2026 智慧膽管守護者 三軍總醫院33病房 測試版</footer>
+
+  <script>
+  // ===== AI 諮詢 =====
+  function appendMessage(text, type) {
+    const box = document.getElementById('chatBox');
+    if (!box) return;
+    const div = document.createElement('div');
+    div.className = `message ${type}`;
+    div.textContent = text;
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function getAIReply(question) {
+    const q = String(question || '').toLowerCase();
+
+    if (q.includes('阻塞') || q.includes('變少')) {
+      return '若引流量突然減少、管路阻塞、引流液大量出血，或引流液性質、顏色改變，如出現大量鮮血，亦或管路傷口處滲液增加，應立即通知醫護人員。若引流量突然變少或沒有引流，可能有阻塞或扭折，請檢查管路並儘速聯絡醫護人員。';
+    }
+    if (q.includes('傷口') || q.includes('紅腫') || q.includes('滲液')|| q.includes('異常')) {
+      return '若傷口紅腫熱痛、滲液，可能有感染，建議儘快就醫。';
+    }
+    if (q.includes('換藥時間')) {
+      return '若傷口乾淨，需三天更換一次紗布，使用防水敷料的話，七天換藥一次即可，若有分泌物、發紅須每日更換，若弄髒或潮濕，應立即做更換，詳細換藥步驟及注意事項也可參考下方衛教區之衛教單張。';
+    }
+    if (q.includes('發燒') || q.includes('痛')) {
+      return '若出現發燒或疼痛加劇，應立即就醫評估。';
+    }
+      if (q.includes('顏色')) {
+      return '一般顏色多為黃褐色、金黃色或黃綠色；放置後三日內引流液呈現紅色是正常的，詳細可參考下方引流液色卡。';
+    }
+    if (q.includes('照護') || q.includes('固定')|| q.includes('避免拉扯')) {
+      return '為避免引流管遭受牽扯，請使用固定夾將引流管妥善固定於同側腰部附近之衣物上，並維持引流袋位置低於傷口，以避免引流液逆流。翻身、下床或活動時，應留意管路是否過緊或受拉扯，並保留適當長度，以確保活動安全及引流通暢。';
+    }
+    if (q.includes('滑出') || q.includes('脫落') || q.includes('滑脫') || q.includes('掉出來')) {
+      return '若引流管滑出或脫落，請勿自行將管路推回原位，應立即以乾淨紗布覆蓋並儘速就醫。';
+    }
+    if (q.includes('倒') || q.includes('排空')) {
+      return '排空引流液前請先洗手，將引流袋下方排出口打開，緩慢將引流液倒入乾淨容器中，注意排出口勿碰觸容器，完成後將排出口關緊，並維持引流袋低於傷口位置。';
+    }
+    return '請依照醫護人員指示進行照護，如有引流量異常、傷口紅腫滲液、發燒或疼痛加劇等情形，請立即就醫。';
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('userQuestion');
+    if (!input) return;
+    const text = input.value.trim();
+    if (!text) return;
+    appendMessage(text, 'user');
+    const reply = getAIReply(text);
+    window.setTimeout(function () {
+      appendMessage(reply, 'bot');
+    }, 250);
+    input.value = '';
+  }
+
+  function clearChat() {
+    const box = document.getElementById('chatBox');
+    if (!box) return;
+    box.innerHTML = `<div class="message bot">您好，我是智慧膽管守護者 AI 小幫手。
+您可以詢問：
+1. 引流管照護方式
+2. 換藥後異常怎麼判斷
+3. 傷口觀察重點
+4. 什麼情況需要回診或就醫</div>`;
+  }
+
+  // ===== 趣味問答（依問卷） =====
+  const quizData = [
+    {
+      question: '無論坐著、躺著或站著，PTGBD 引流袋都應自然下垂，並保持低於傷口位置，避免引流液逆流。',
+      options: ['是', '否', '不知道'],
+      answer: 0,
+      explanation: '正確，PTGBD 引流袋應低於傷口位置，以避免逆流。'
+    },
+    {
+      question: '如果傷口敷料出現潮濕、弄髒、滲液或傷口發紅，不必立即換藥，可以等下次換藥再說。',
+      options: ['是', '否', '不知道'],
+      answer: 1,
+      explanation: '正確答案是否，若敷料潮濕、髒污、滲液或傷口發紅，應提早處理。'
+    },
+    {
+      question: '為了避免引流管被拉扯，下床活動時需將引流管固定在同側腰際衣物上，並注意管路保持通暢、不扭折。',
+      options: ['是', '否', '不知道'],
+      answer: 0,
+      explanation: '正確，活動時需妥善固定管路，避免拉扯與扭折。'
+    },
+    {
+      question: '若出現引流管滑出或脫落、引流量突然減少，或發燒超過 4 小時時，可以先在家休息觀察，不必立即就醫。',
+      options: ['是', '否', '不知道'],
+      answer: 1,
+      explanation: '正確答案是否，出現這些情況應儘速就醫。'
+    },
+    {
+      question: '倒引流液前應先洗手，再將引流液緩慢倒入乾淨容器中，且排出口不要碰觸容器。',
+      options: ['是', '否', '不知道'],
+      answer: 0,
+      explanation: '正確，排空引流液時應保持清潔，避免排出口碰觸容器。'
+    },
+    {
+      question: '引流袋中的引流液，等到袋內液體完全裝滿後，再統一將引流液倒出，不需要提前排空。',
+      options: ['是', '否', '不知道'],
+      answer: 1,
+      explanation: '正確答案是否，不應等到全滿才倒，以免影響引流。'
+    },
+    {
+      question: '傷口外觀乾淨時，若以紗布覆蓋，應每三天更換一次；若以防水透氣敷料覆蓋，則應每七天更換一次。',
+      options: ['是', '否', '不知道'],
+      answer: 0,
+      explanation: '正確，傷口乾淨時可依敷料類型按建議頻率更換。'
+    },
+    {
+      question: '為了避免浪費，PTGBD 傷口消毒時可使用同一支棉棒反覆擦拭傷口及引流管。',
+      options: ['是', '否', '不知道'],
+      answer: 1,
+      explanation: '正確答案是否，消毒時不可用同一支棉棒反覆擦拭。'
+    },
+    {
+      question: '當 PTGBD 引流管不小心滑出或脫落時，自行將管路推回原位，再觀察是否有不適即可。',
+      options: ['是', '否', '不知道'],
+      answer: 1,
+      explanation: '正確答案是否，切勿自行推回原位，應儘速就醫。'
+    },
+    {
+      question: '相比單純口頭衛教，透過線上護理指導網站，您對於 PTGBD 照護更加了解。',
+      options: ['是', '否', '不知道'],
+      answer: 0,
+      explanation: '此題作為整體使用感受評估，示範答案設定為「是」。'
+    }
+  ];
+
+  let quizState = [];
+
+  function renderQuiz() {
+    const area = document.getElementById('quizArea');
+    if (!area) return;
+    area.innerHTML = '';
+    quizState = Array(quizData.length).fill(null);
+
+    quizData.forEach((item, i) => {
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.innerHTML = `
+        <h3>第 ${i + 1} 題</h3>
+        <p style="font-weight:700; margin-top:8px;">${item.question}</p>
+        <div class="quiz-options">
+          ${item.options.map((opt, j) => `<button type="button" class="option-btn" id="q${i}-o${j}" onclick="answerQuiz(${i}, ${j})">${opt}</button>`).join('')}
+        </div>
+        <div id="feedback-${i}" style="margin-top:10px; font-weight:700;"></div>
+      `;
+      area.appendChild(card);
+    });
+
+    updateQuizSummary();
+  }
+
+  function answerQuiz(i, j) {
+    quizState[i] = j;
+    const q = quizData[i];
+    const feedback = document.getElementById(`feedback-${i}`);
+
+    q.options.forEach((_, idx) => {
+      const btn = document.getElementById(`q${i}-o${idx}`);
+      if (btn) btn.classList.remove('correct', 'wrong');
+    });
+
+    const selectedBtn = document.getElementById(`q${i}-o${j}`);
+    const correctBtn = document.getElementById(`q${i}-o${q.answer}`);
+
+    if (j === q.answer) {
+      if (selectedBtn) selectedBtn.classList.add('correct');
+      if (feedback) feedback.textContent = `答對了！${q.explanation}`;
+    } else {
+      if (selectedBtn) selectedBtn.classList.add('wrong');
+      if (correctBtn) correctBtn.classList.add('correct');
+      if (feedback) feedback.textContent = `答錯了。${q.explanation}`;
+    }
+
+    updateQuizSummary();
+  }
+
+  function updateQuizSummary() {
+    const summary = document.getElementById('quizSummary');
+    if (!summary) return;
+    const answered = quizState.filter(v => v !== null).length;
+    const score = quizState.filter((v, i) => v === quizData[i].answer).length;
+    summary.innerHTML = `目前作答：${answered} / ${quizData.length}<br>目前得分：${score} 分`;
+  }
+
+  // ===== 紀錄表下載 =====
+  function downloadForm() {
+    const a = document.createElement('a');
+    a.href = 'images/引流液紀錄表.pdf';
+    a.download = '引流液紀錄表.pdf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+  // ===== 衛教單張下載 =====
+  function downloadGuide() {
+    const a = document.createElement('a');
+    a.href = 'images/PTGBD護理指導.pdf';
+    a.download = 'PTGBD護理指導.pdf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+  // 初始化
+  window.addEventListener('DOMContentLoaded', function () {
+    clearChat();
+    renderQuiz();
+  });
+</script>
+</body>
+</html>
