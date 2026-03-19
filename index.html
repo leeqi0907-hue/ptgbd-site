@@ -619,15 +619,15 @@
           <div class="arrow-icon"></div>
           <div style="width:100%; display:grid; gap:14px;">
             <div class="card">
-              <img src="images/1.png" alt="PTGBD 基本介紹" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+              <img src="1.png" alt="PTGBD 基本介紹" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
               <div style="display:none; padding:12px; font-weight:700;">請將 <code>1.png</code> 放在與 <code>index.html</code> 相同的資料夾中。</div>
             </div>
             <div class="card">
-              <img src="images/2.png" alt="PTGBD 換藥步驟" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+              <img src="2.png" alt="PTGBD 換藥步驟" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
               <div style="display:none; padding:12px; font-weight:700;">請將 <code>2.png</code> 放在與 <code>index.html</code> 相同的資料夾中。</div>
             </div>
             <div class="card">
-              <img src="images/3.png" alt="PTGBD 日常照護注意事項" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+              <img src="3.png" alt="PTGBD 日常照護注意事項" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
               <div style="display:none; padding:12px; font-weight:700;">請將 <code>3.png</code> 放在與 <code>index.html</code> 相同的資料夾中。</div>
             </div>
           </div>
@@ -666,7 +666,7 @@
         <p class="section-desc">可對照引流液顏色進行觀察與記錄。一般顏色多為黃褐色、金黃色或黃綠色；放置後三日內若引流液呈現紅色，可能屬常見情形，仍應持續觀察。</p>
 
         <div class="card" style="margin-bottom:18px;">
-          <img src="images/colorcard.png" alt="引流液色卡" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <img src="colorcard.png" alt="引流液色卡" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
           <div style="display:none; padding:18px; font-weight:700;">請將使用者提供的色卡圖片檔 <code>引流液色卡.png</code> 放在與 <code>index.html</code> 相同的資料夾中，即可顯示色卡圖片。</div>
         </div>
 
@@ -873,7 +873,7 @@
   // ===== 紀錄表下載 =====
   function downloadForm() {
     const a = document.createElement('a');
-    a.href = 'images/引流液紀錄表.pdf';
+    a.href = '引流液紀錄表.pdf';
     a.download = '引流液紀錄表.pdf';
     document.body.appendChild(a);
     a.click();
@@ -882,7 +882,7 @@
   // ===== 衛教單張下載 =====
   function downloadGuide() {
     const a = document.createElement('a');
-    a.href = 'images/PTGBD護理指導.pdf';
+    a.href = 'PTGBD護理指導.pdf';
     a.download = 'PTGBD護理指導.pdf';
     document.body.appendChild(a);
     a.click();
