@@ -663,7 +663,7 @@
       <div class="big-panel panel-green panel-content" style="min-height: 520px;">
         <div class="mini-tag">引流液色卡</div>
         <h2 class="section-title">引流液色卡</h2>
-        <p class="section-desc">可對照引流液顏色進行觀察與記錄。一般顏色多為黃褐色、金黃色或黃綠色；放置後三日內若引流液呈現紅色，可能屬常見情形，仍應持續觀察。</p>
+        <p class="section-desc">可對照引流液顏色進行觀察與記錄，一般顏色多為黃褐色、金黃色或黃綠色；放置後三日內引流液呈紅色，屬正常情形，若超過三日則須注意。</p>
 
         <div class="card" style="margin-bottom:18px;">
           <img src="colorcard.png" alt="引流液色卡" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -697,7 +697,7 @@
   function getAIReply(question) {
     const q = String(question || '').toLowerCase();
 
-    if (q.includes('阻塞') || q.includes('變少')) {
+    if (q.includes('阻塞') || q.includes('變少')|| q.includes('流血')) {
       return '若引流量突然減少、管路阻塞、引流液大量出血，或引流液性質、顏色改變，如出現大量鮮血，亦或管路傷口處滲液增加，應立即通知醫護人員。若引流量突然變少或沒有引流，可能有阻塞或扭折，請檢查管路並儘速聯絡醫護人員。';
     }
     if (q.includes('傷口') || q.includes('紅腫') || q.includes('滲液')|| q.includes('異常')) {
@@ -709,7 +709,7 @@
     if (q.includes('發燒') || q.includes('痛')) {
       return '若出現發燒或疼痛加劇，應立即就醫評估。';
     }
-      if (q.includes('顏色')) {
+      if (q.includes('顏色')|| q.includes('紅')|| q.includes('黃')|| q.includes('褐')|| q.includes('綠')) {
       return '一般顏色多為黃褐色、金黃色或黃綠色；放置後三日內引流液呈現紅色是正常的，詳細可參考下方引流液色卡。';
     }
     if (q.includes('照護') || q.includes('固定')|| q.includes('避免拉扯')) {
@@ -805,10 +805,10 @@
       explanation: '正確答案是否，切勿自行推回原位，應儘速就醫。'
     },
     {
-      question: '相比單純口頭衛教，透過線上護理指導網站，您對於 PTGBD 照護更加了解。',
+      question: '若引流管周圍皮膚持續發紅、腫脹、出血、疼痛加劇、傷口出血或有滲液，須儘速就醫。',
       options: ['是', '否', '不知道'],
       answer: 0,
-      explanation: '此題作為整體使用感受評估，示範答案設定為「是」。'
+      explanation: '正確，若傷口出現紅腫熱痛、出血、滲液或出現發燒、管路滑脫等情形，皆須盡速就醫。'
     }
   ];
 
