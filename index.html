@@ -506,7 +506,7 @@
       <div class="brand display">智慧膽管守護者</div>
       <div class="nav-links">
         <a href="#ai">AI諮詢小幫手</a>
-        <a href="#care">日常照護</a>
+        <a href="#care">日常照護與衛教影片</a>
         <a href="#quiz">趣味問答</a>
         <a href="#record">紀錄表及衛教單張下載</a>
         <a href="#colorcard">引流液色卡</a>
@@ -520,7 +520,7 @@
     <div class="container hero-grid">
       <div class="hero-card">
         <h1>智慧膽管守護者</h1>
-        <p>結合 AI 諮詢、膽道疾病衛教、遊戲測驗、紀錄表下載及引流液色卡，協助病人與家屬更安心地進行日常照護與自我管理。</p>
+        <p>結合 AI 諮詢、膽道疾病衛教、遊戲測驗、紀錄表下載及引流液色卡等多項功能，協助病人與家屬更安心地進行日常照護與自我管理。</p>
       </div>
       <div class="hero-side">
         <h2>網站功能</h2>
@@ -592,8 +592,8 @@
       <div class="triangle" style="right:42%; top:52%;"></div>
       <div class="grid-2 reverse">
         <div class="big-panel panel-blue panel-content">
-          <h2 class="section-title">日常照護</h2>
-          <p class="section-desc">依照你提供的衛教圖片內容，整理為三個重點區塊：基本介紹、換藥步驟與照護注意事項。</p>
+          <h2 class="section-title">日常照護與衛教影片</h2>
+          <p class="section-desc">換藥影片連結：。</p>
 
           <div class="care-grid">
             <div class="card">
@@ -671,7 +671,7 @@
         </div>
 
         <div class="care-grid">
-          <div class="card"><strong>暗紅色／鮮紅色／淡紅色</strong><br>若為放置初期三日內，可持續觀察；若大量鮮紅色或持續出血，應立即就醫。</div>
+          <div class="card"><strong>暗紅色／鮮紅色／淡紅色／橘色</strong><br>若為放置初期三日內，可持續觀察；若大量鮮紅色或持續出血，應立即就醫。</div>
           <div class="card"><strong>金黃色／黃色／淡黃色</strong><br>多為較常見之膽汁顏色，仍需搭配引流量與病人症狀一起觀察。</div>
           <div class="card"><strong>黃褐色／褐色</strong><br>常見於膽汁引流，可持續記錄顏色與量的變化。</div>
           <div class="card"><strong>黃綠色／墨綠色</strong><br>若與平常差異不大可持續觀察；若顏色突然改變並合併疼痛、發燒或異味，應就醫。</div>
@@ -700,16 +700,16 @@
     if (q.includes('阻塞') || q.includes('變少')|| q.includes('流血')|| q.includes('沒有流')|| q.includes('不流')) {
       return '若引流量突然減少、管路阻塞、引流液大量出血，或引流液性質、顏色改變，如出現大量鮮血，亦或管路傷口處滲液增加，應立即通知醫護人員。若引流量突然變少或沒有引流，可能有阻塞或扭折，請檢查管路並儘速聯絡醫護人員。';
     }
-    if (q.includes('傷口') || q.includes('紅腫') || q.includes('滲液')|| q.includes('異常')) {
+    if (q.includes('傷口') || q.includes('紅腫') || q.includes('滲液')|| q.includes('異常')|| q.includes('濕濕')) {
       return '若傷口紅腫熱痛、滲液，可能有感染，建議儘快就醫。';
     }
-    if (q.includes('換藥時間')|| q.includes('換藥')|| q.includes('如何換藥')) {
+    if (q.includes('換藥時間')|| q.includes('換藥')|| q.includes('如何換藥')|| q.includes('怎麼換藥')) {
       return '若傷口乾淨，需三天更換一次紗布，使用防水敷料的話，七天換藥一次即可，若有分泌物、發紅須每日更換，若弄髒或潮濕，應立即做更換，詳細換藥步驟及注意事項也可參考下方衛教區之衛教單張。';
     }
     if (q.includes('發燒') || q.includes('痛')) {
       return '若出現發燒或疼痛加劇，應立即就醫評估。';
     }
-      if (q.includes('顏色')|| q.includes('紅')|| q.includes('黃')|| q.includes('褐')|| q.includes('綠')) {
+      if (q.includes('顏色')|| q.includes('紅')|| q.includes('黃')|| q.includes('褐')|| q.includes('綠')|| q.includes('橘')) {
       return '一般顏色多為黃褐色、金黃色或黃綠色；放置後三日內引流液呈現紅色是正常的，詳細可參考下方引流液色卡。';
     }
     if (q.includes('照護') || q.includes('固定')|| q.includes('避免拉扯')) {
@@ -718,7 +718,7 @@
     if (q.includes('滑出') || q.includes('脫落') || q.includes('滑脫') || q.includes('掉出來')) {
       return '若引流管滑出或脫落，請勿自行將管路推回原位，應立即以乾淨紗布覆蓋並儘速就醫。';
     }
-    if (q.includes('倒') || q.includes('排空')) {
+    if (q.includes('倒') || q.includes('排空')|| q.includes('倒引流液')) {
       return '排空引流液前請先洗手，將引流袋下方排出口打開，緩慢將引流液倒入乾淨容器中，注意排出口勿碰觸容器，完成後將排出口關緊，並維持引流袋低於傷口位置。';
     }
     return '請依照醫護人員指示進行照護，如有引流量異常、傷口紅腫滲液、發燒或疼痛加劇等情形，請立即就醫。';
