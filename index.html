@@ -620,15 +620,15 @@
           <div style="width:100%; display:grid; gap:14px;">
             <div class="card">
               <img src="1.png" alt="PTGBD 基本介紹" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-              <div style="display:none; padding:12px; font-weight:700;">請將 <code>1.png</code> 放在與 <code>index.html</code> 相同的資料夾中。</div>
+              <div style="display:none; padding:12px; font-weight:700;"></div>
             </div>
             <div class="card">
               <img src="2.png" alt="PTGBD 換藥步驟" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-              <div style="display:none; padding:12px; font-weight:700;">請將 <code>2.png</code> 放在與 <code>index.html</code> 相同的資料夾中。</div>
+              <div style="display:none; padding:12px; font-weight:700;"></div>
             </div>
             <div class="card">
               <img src="3.png" alt="PTGBD 日常照護注意事項" style="width:100%; border-radius:18px; display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-              <div style="display:none; padding:12px; font-weight:700;">請將 <code>3.png</code> 放在與 <code>index.html</code> 相同的資料夾中。</div>
+              <div style="display:none; padding:12px; font-weight:700;"></div>
             </div>
           </div>
         </div>
@@ -697,13 +697,13 @@
   function getAIReply(question) {
     const q = String(question || '').toLowerCase();
 
-    if (q.includes('阻塞') || q.includes('變少')|| q.includes('流血')) {
+    if (q.includes('阻塞') || q.includes('變少')|| q.includes('流血')|| q.includes('沒有流')|| q.includes('不流')) {
       return '若引流量突然減少、管路阻塞、引流液大量出血，或引流液性質、顏色改變，如出現大量鮮血，亦或管路傷口處滲液增加，應立即通知醫護人員。若引流量突然變少或沒有引流，可能有阻塞或扭折，請檢查管路並儘速聯絡醫護人員。';
     }
     if (q.includes('傷口') || q.includes('紅腫') || q.includes('滲液')|| q.includes('異常')) {
       return '若傷口紅腫熱痛、滲液，可能有感染，建議儘快就醫。';
     }
-    if (q.includes('換藥時間')) {
+    if (q.includes('換藥時間')|| q.includes('換藥')|| q.includes('如何換藥')) {
       return '若傷口乾淨，需三天更換一次紗布，使用防水敷料的話，七天換藥一次即可，若有分泌物、發紅須每日更換，若弄髒或潮濕，應立即做更換，詳細換藥步驟及注意事項也可參考下方衛教區之衛教單張。';
     }
     if (q.includes('發燒') || q.includes('痛')) {
